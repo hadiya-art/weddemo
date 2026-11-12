@@ -36,16 +36,17 @@ test("unknown route shows the 404 page with a way home", async ({ page }) => {
   await expect(page.getByRole("link", { name: /home/i }).first()).toBeVisible();
 });
 
-test("every internal link on marketing pages resolves", async ({ page, request }) => {
+test("every internal link on marketing pages resolves", async ({ page }) => {
   const seen = new Set<string>();
   for (const route of ROUTES.filter((r) => r !== "/demo")) {
     await page.goto(route);
     const hrefs = await page.$$eval("a[href^='/']", (as) => as.map((a) => a.getAttribute("href")!));
     hrefs.forEach((h) => seen.add(h.split("#")[0].split("?")[0] || "/"));
   }
+  // Load each target in the browser (also proves it renders, not just responds).
   for (const href of seen) {
-    const res = await request.get(href);
-    expect(res.status(), `link ${href}`).toBe(200);
+    const res = await page.goto(href);
+    expect(res?.status(), `link ${href}`).toBe(200);
   }
 });
 

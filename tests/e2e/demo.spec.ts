@@ -107,6 +107,11 @@ test.describe("interactive demo", () => {
     await page.getByRole("button", { name: "Reset sample data" }).first().click();
     await page.getByRole("dialog", { name: "Reset sample data?" }).getByRole("button", { name: "Reset demo" }).click();
     await expect(page.getByText("Sample data restored")).toBeVisible();
+    // Next.js mirrors the view's URL change one frame later; let history settle
+    // before issuing another hash navigation (humans can't click that fast).
+    await page.evaluate(
+      () => new Promise((r) => requestAnimationFrame(() => requestAnimationFrame(() => setTimeout(r, 50)))),
+    );
     await page.goto("/demo#feedback");
     await expect(page.getByText("Average rating")).toBeVisible();
     await expect(page.getByText("E2E Guest")).toHaveCount(0);

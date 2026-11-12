@@ -24,7 +24,7 @@ export const site = {
   conceptNotice:
     "EVENTOS is a fictional concept brand built to demonstrate design and product direction. Features, data and names shown are illustrative only.",
   /** Used for metadata. Update when a real domain is confirmed. */
-  url: process.env.NEXT_PUBLIC_SITE_URL ?? "https://eventos-concept.vercel.app",
+  url: process.env.NEXT_PUBLIC_SITE_URL ?? "https://eventos-concept-demo.vercel.app",
   locale: "en_IN",
   copyrightYear: 2026,
 } as const;

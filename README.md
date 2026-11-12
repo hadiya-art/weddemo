@@ -51,9 +51,13 @@ npm run typecheck
 npm run test:unit    # quotation, teaser and validation maths
 npm run build
 npm run test:e2e     # Playwright, against `next start` on :3100 (run after build)
+PLAYWRIGHT_BASE_URL=https://eventos-concept-demo.vercel.app npm run test:e2e   # against the live site
 ```
 
 ## Deploying to Vercel
+
+Live concept site: <https://eventos-concept-demo.vercel.app> (Vercel project `eventos-concept-demo`).
+
 
 1. Go to <https://vercel.com/new> and import `hadiya-art/weddemo`.
 2. Framework preset: **Next.js** (auto-detected). No environment variables needed.
