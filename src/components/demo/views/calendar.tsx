@@ -83,7 +83,7 @@ export function CalendarView() {
         }
       />
 
-      <div className="grid gap-4 xl:grid-cols-[minmax(0,1fr)_300px]">
+      <div className="grid grid-cols-1 gap-4 xl:grid-cols-[minmax(0,1fr)_300px]">
         <Card as="div" className="overflow-hidden">
           <div className="flex flex-wrap items-center justify-between gap-3 border-b border-line px-4 py-3 sm:px-5">
             <div className="flex items-center gap-1">
@@ -201,7 +201,7 @@ export function CalendarView() {
                             className={cn(
                               "flex w-full items-start gap-2.5 rounded-lg px-3 py-2.5 text-left transition-colors",
                               EVENT_TYPE_META[e.type].chip,
-                              e.status === "cancelled" && "opacity-60",
+                              e.status === "cancelled" && "bg-[#F1F3F7] text-ink-subtle",
                             )}
                           >
                             <span aria-hidden className={cn("mt-1 h-8 w-[3px] shrink-0 rounded-full", EVENT_TYPE_META[e.type].bar)} />
@@ -286,13 +286,16 @@ function EventChip({ event, onOpen }: { event: DemoEvent; onOpen: () => void }) 
       onClick={onOpen}
       title={`${event.title} · ${formatTime(event.startTime)}`}
       className={cn(
-        "group flex w-full min-w-0 items-center gap-1.5 rounded-md py-1 pr-1.5 pl-1 text-left text-[11.5px] leading-tight font-medium transition-colors",
+        "group flex w-full min-w-0 items-stretch gap-1.5 rounded-md py-1 pr-1.5 pl-1 text-left text-[11.5px] leading-tight font-medium transition-colors",
         meta.chip,
-        cancelled && "opacity-55",
+        cancelled && "bg-[#F1F3F7] text-ink-subtle hover:bg-[#E9ECF2]",
       )}
     >
-      <span aria-hidden className={cn("h-3.5 w-[3px] shrink-0 rounded-full", meta.bar)} />
-      <span className={cn("min-w-0 flex-1 truncate", cancelled && "line-through")}>{event.title}</span>
+      <span aria-hidden className={cn("w-[3px] shrink-0 rounded-full", meta.bar)} />
+      <span className="min-w-0 flex-1">
+        <span className={cn("line-clamp-2 break-words", cancelled && "line-through")}>{event.title}</span>
+        <span className="mt-0.5 block text-[10.5px] font-normal tabular-nums">{formatTime(event.startTime)}</span>
+      </span>
       <span className="sr-only">
         , {meta.label}, {event.status}, {formatTime(event.startTime)}
       </span>

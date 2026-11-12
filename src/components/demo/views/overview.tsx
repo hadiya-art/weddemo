@@ -94,12 +94,12 @@ export function OverviewView() {
         />
       </section>
 
-      <div className="mt-4 grid gap-4 xl:grid-cols-3">
+      <div className="mt-4 grid grid-cols-1 gap-4 xl:grid-cols-3">
         <BookingsChart />
         <TaskSummary />
       </div>
 
-      <div className="mt-4 grid gap-4 xl:grid-cols-3">
+      <div className="mt-4 grid grid-cols-1 gap-4 xl:grid-cols-3">
         <UpcomingEvents />
         <div className="flex flex-col gap-4">
           <FeedbackSummary avg={k.avgRating} count={k.ratingsCount} />
@@ -167,8 +167,9 @@ function BookingsChart() {
   const [hover, setHover] = useState<number | null>(null);
   const max = Math.max(...BOOKING_HISTORY.map((b) => b.bookings));
   const ceiling = Math.ceil(max / 5) * 5;
+  const tickStep = ceiling / 5 >= 3 ? 10 : 5;
   const total = BOOKING_HISTORY.reduce((s, b) => s + b.bookings, 0);
-  const ticks = [ceiling, ceiling / 2, 0];
+  const ticks = Array.from({ length: Math.floor(ceiling / tickStep) + 1 }, (_, i) => i * tickStep).reverse();
   const peak = BOOKING_HISTORY.reduce((a, b) => (b.bookings > a.bookings ? b : a));
   const lastIndex = BOOKING_HISTORY.length - 1;
 
@@ -336,7 +337,7 @@ function UpcomingEvents() {
   const upcoming = data.events
     .filter(isUpcoming)
     .sort((a, b) => toUTC(a.date) - toUTC(b.date))
-    .slice(0, 6);
+    .slice(0, 8);
   return (
     <Card className="xl:col-span-2" aria-labelledby="upcoming-title">
       <CardHeader
@@ -383,7 +384,7 @@ function UpcomingEvents() {
                 <span className="hidden w-16 shrink-0 text-right text-[12px] text-ink-muted tabular-nums sm:block">
                   {e.guests.toLocaleString("en-IN")} pax
                 </span>
-                <span className="flex shrink-0 flex-col items-end gap-1">
+                <span className="flex w-[92px] shrink-0 flex-col items-end gap-1">
                   <StatusBadge status={e.status} />
                   <span className="font-mono text-[10.5px] text-ink-subtle">{d === 0 ? "Today" : d === 1 ? "Tomorrow" : `in ${d}d`}</span>
                 </span>

@@ -40,6 +40,10 @@ const FOCUSABLE =
   'a[href], button:not([disabled]), input:not([disabled]), select:not([disabled]), textarea:not([disabled]), [tabindex]:not([tabindex="-1"])';
 
 /** Moves focus into `ref` on mount, traps Tab, closes on Escape, restores focus on unmount. */
+/** Open dialogs, innermost last — only the top one reacts to Escape / Tab. */
+const dialogStack: HTMLElement[] = [];
+
+/** Moves focus into `ref` on mount, traps Tab, closes on Escape, restores focus on unmount. */
 export function useDialogFocus(
   ref: RefObject<HTMLElement | null>,
   onClose: () => void,
@@ -53,14 +57,17 @@ export function useDialogFocus(
   useEffect(() => {
     const previous = document.activeElement as HTMLElement | null;
     const node = ref.current;
+    if (!node) return;
+    dialogStack.push(node);
     const target =
-      initialFocus?.current ?? node?.querySelector<HTMLElement>("[data-autofocus]") ?? node?.querySelector<HTMLElement>(FOCUSABLE);
-    (target ?? node)?.focus({ preventScroll: true });
+      initialFocus?.current ?? node.querySelector<HTMLElement>("[data-autofocus]") ?? node.querySelector<HTMLElement>(FOCUSABLE);
+    (target ?? node).focus({ preventScroll: true });
 
     const onKey = (e: KeyboardEvent) => {
-      if (!node) return;
+      if (dialogStack[dialogStack.length - 1] !== node) return;
       if (e.key === "Escape") {
-        e.stopPropagation();
+        e.preventDefault();
+        e.stopImmediatePropagation();
         closeRef.current();
         return;
       }
@@ -70,25 +77,33 @@ export function useDialogFocus(
       );
       if (items.length === 0) {
         e.preventDefault();
+        node.focus();
         return;
       }
       const first = items[0];
       const last = items[items.length - 1];
-      if (e.shiftKey && (document.activeElement === first || !node.contains(document.activeElement))) {
+      const active = document.activeElement;
+      if (!node.contains(active)) {
+        e.preventDefault();
+        (e.shiftKey ? last : first).focus();
+      } else if (e.shiftKey && active === first) {
         e.preventDefault();
         last.focus();
-      } else if (!e.shiftKey && document.activeElement === last) {
+      } else if (!e.shiftKey && active === last) {
         e.preventDefault();
         first.focus();
       }
     };
-    node?.addEventListener("keydown", onKey);
+    // Capture phase on the document so Escape works wherever focus currently is.
+    document.addEventListener("keydown", onKey, true);
     return () => {
-      node?.removeEventListener("keydown", onKey);
+      document.removeEventListener("keydown", onKey, true);
+      const idx = dialogStack.indexOf(node);
+      if (idx >= 0) dialogStack.splice(idx, 1);
       // Only hand focus back if it is still inside this dialog (or lost) — another
       // overlay may have legitimately taken it in the meantime.
       const current = document.activeElement;
-      const focusLost = !current || current === document.body || (node?.contains(current) ?? false);
+      const focusLost = !current || current === document.body || node.contains(current);
       if (focusLost && previous && document.contains(previous)) previous.focus({ preventScroll: true });
     };
   }, [ref, initialFocus]);
@@ -328,6 +343,22 @@ export function DietMark({ diet, className }: { diet: Diet; className?: string }
 
 /* ───────────────────────────── Avatars ───────────────────────────── */
 
+function hexToRgb(hex: string): [number, number, number] {
+  const h = hex.replace("#", "");
+  return [0, 2, 4].map((i) => Number.parseInt(h.slice(i, i + 2), 16)) as [number, number, number];
+}
+/** Opaque tint (so overlapping avatars don't show through each other). */
+function mixWithWhite(hex: string, amount: number): string {
+  const [r, g, b] = hexToRgb(hex);
+  const mix = (c: number) => Math.round(255 - (255 - c) * amount);
+  return `rgb(${mix(r)} ${mix(g)} ${mix(b)})`;
+}
+function darken(hex: string, amount: number): string {
+  const [r, g, b] = hexToRgb(hex);
+  const d = (c: number) => Math.round(c * (1 - amount));
+  return `rgb(${d(r)} ${d(g)} ${d(b)})`;
+}
+
 export function Avatar({
   name,
   tint = "#386BFF",
@@ -351,7 +382,7 @@ export function Avatar({
         ring && "ring-2 ring-white",
         className,
       )}
-      style={{ backgroundColor: `${tint}1F`, color: tint }}
+      style={{ backgroundColor: mixWithWhite(tint, 0.14), color: darken(tint, 0.38) }}
     >
       {initials(name)}
     </span>
@@ -364,7 +395,7 @@ export function AvatarStack({ people, max = 4 }: { people: StaffMember[]; max?: 
   return (
     <span className="flex items-center" aria-label={people.map((p) => p.name).join(", ")} role="img">
       {shown.map((p, i) => (
-        <Avatar key={p.id} name={p.name} tint={p.tint} size="sm" ring className={cn(i > 0 && "-ml-1.5", "bg-white")} />
+        <Avatar key={p.id} name={p.name} tint={p.tint} size="sm" ring className={cn(i > 0 && "-ml-1.5")} />
       ))}
       {people.length > max && (
         <span className="-ml-1.5 inline-flex size-6 items-center justify-center rounded-full bg-mist text-[9.5px] font-semibold text-ink-muted ring-2 ring-white">

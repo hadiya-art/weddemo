@@ -10,14 +10,14 @@ export const metadata: Metadata = {
     "Why event businesses need one operating layer, and the design principles behind the EVENTOS concept. Company story and team details are placeholders pending client input.",
 };
 
-const scattered = [
-  { label: "Chat threads", x: "8%", y: "10%", r: -4 },
-  { label: "Spreadsheet menus", x: "46%", y: "4%", r: 3 },
-  { label: "PDF quotations", x: "18%", y: "36%", r: 2 },
-  { label: "Paper run-sheets", x: "58%", y: "30%", r: -3 },
-  { label: "Missed calls", x: "4%", y: "62%", r: 3 },
-  { label: "Printed menus", x: "40%", y: "58%", r: -2 },
-  { label: "Notebook follow-ups", x: "26%", y: "82%", r: 1 },
+const scattered: { label: string; side: "left" | "right"; x: string; y: string; r: number }[] = [
+  { label: "Chat threads", side: "left", x: "6%", y: "8%", r: -4 },
+  { label: "Spreadsheet menus", side: "right", x: "5%", y: "2%", r: 3 },
+  { label: "PDF quotations", side: "left", x: "10%", y: "33%", r: 2 },
+  { label: "Paper run-sheets", side: "right", x: "4%", y: "27%", r: -3 },
+  { label: "Missed calls", side: "left", x: "4%", y: "58%", r: 3 },
+  { label: "Printed menus", side: "right", x: "8%", y: "53%", r: -2 },
+  { label: "Notebook follow-ups", side: "left", x: "16%", y: "79%", r: 1 },
 ];
 
 const principles = [
@@ -110,7 +110,7 @@ export default function AboutPage() {
                   <span
                     key={s.label}
                     className="absolute rounded-lg bg-white px-2.5 py-1.5 text-[0.74rem] whitespace-nowrap text-ink-muted shadow-[0_6px_16px_-10px_rgb(11_16_32/0.4)] ring-1 ring-ink/[0.07]"
-                    style={{ left: s.x, top: `calc(${s.y} + 1.6rem)`, transform: `rotate(${s.r}deg)` }}
+                    style={{ [s.side]: s.x, top: `calc(${s.y} + 1.6rem)`, transform: `rotate(${s.r}deg)` }}
                   >
                     {s.label}
                   </span>

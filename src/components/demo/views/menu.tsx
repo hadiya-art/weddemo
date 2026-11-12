@@ -72,7 +72,7 @@ export function MenuView() {
         description="Compose a catering menu from the dish catalogue. Per-plate pricing and the catering subtotal update instantly — and flow straight into the quotation and the guest app."
       />
 
-      <div className="grid gap-4 lg:grid-cols-[minmax(0,1fr)_360px] xl:grid-cols-[minmax(0,1fr)_380px]">
+      <div className="grid grid-cols-1 gap-4 lg:grid-cols-[minmax(0,1fr)_360px] xl:grid-cols-[minmax(0,1fr)_380px]">
         <Card as="div" className="min-w-0">
           <div className="flex flex-col gap-3 border-b border-line p-3 sm:p-4">
             <div className="flex flex-col gap-3 sm:flex-row sm:items-center">
@@ -86,7 +86,7 @@ export function MenuView() {
                   type="search"
                   value={query}
                   onChange={(e) => setQuery(e.target.value)}
-                  placeholder="Search 44 dishes — try “paneer” or “biryani”"
+                  placeholder={`Search ${DISHES.length} dishes — try “paneer” or “biryani”`}
                   className="h-9 w-full rounded-lg border border-line bg-white pr-3 pl-8.5 text-[13px] text-ink placeholder:text-ink-subtle/80 hover:border-line-strong focus:border-electric focus:shadow-[0_0_0_3px_rgb(56_107_255/0.15)] focus-visible:outline-none"
                 />
               </div>
@@ -143,7 +143,7 @@ export function MenuView() {
                       </h2>
                       {count > 0 && <span className="text-[11.5px] text-electric-600">{count} in menu</span>}
                     </div>
-                    <ul className="grid gap-1 sm:grid-cols-2">
+                    <ul className="grid grid-cols-1 gap-1 sm:grid-cols-2">
                       {dishes.map((d) => {
                         const inMenu = event.menu.includes(d.id);
                         return (
@@ -197,7 +197,7 @@ export function MenuView() {
           )}
         </Card>
 
-        <aside aria-label="Current menu" id="menu-summary" className="min-w-0 lg:sticky lg:top-0 lg:self-start">
+        <aside aria-label="Current menu" id="menu-summary" className="min-w-0 lg:sticky lg:top-4 lg:self-start">
           <Card as="div" className="overflow-hidden">
             <div className="border-b border-line bg-gradient-to-b from-mist/80 to-white p-4">
               <EventPicker label="Menu for event" />
@@ -219,7 +219,7 @@ export function MenuView() {
               </div>
             </div>
 
-            <div className="scrollbar-thin max-h-[42vh] overflow-y-auto px-4 py-3 lg:max-h-[calc(100dvh-26rem)]">
+            <div className="scrollbar-thin max-h-[42vh] overflow-y-auto px-4 py-3 lg:max-h-[calc(100dvh-31rem)] lg:min-h-[120px]">
               {selected.length === 0 ? (
                 <EmptyState
                   className="py-8"

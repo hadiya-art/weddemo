@@ -57,8 +57,8 @@ export function SiteFooter() {
             textAnchor="middle"
             textLength="990"
             lengthAdjust="spacingAndGlyphs"
-            fill="rgba(255,255,255,0.05)"
-            style={{ fontFamily: "var(--font-sans)", fontWeight: 600, fontSize: 210, letterSpacing: "-0.03em" }}
+            fill="#151a2c"
+            style={{ fontFamily: "var(--font-sans)", fontWeight: 600, fontSize: 210, letterSpacing: "0" }}
           >
             EVENTOS
           </text>

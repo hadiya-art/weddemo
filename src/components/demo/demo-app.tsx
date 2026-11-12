@@ -4,6 +4,7 @@ import Link from "next/link";
 import { useEffect, useRef, useState, type ComponentType } from "react";
 import { motion, useReducedMotion } from "motion/react";
 import {
+  ArrowLeft,
   ArrowUpRight,
   CalendarDays,
   Check,
@@ -165,20 +166,25 @@ function ConceptBanner() {
     <div className="on-dark relative z-30 flex min-h-9 items-center justify-between gap-3 border-b border-white/[0.06] bg-[#070A16] px-4 py-1.5 text-[12px] text-haze-muted sm:px-5 print:hidden">
       <p className="flex min-w-0 items-center gap-2">
         <span aria-hidden className="size-1.5 shrink-0 rounded-full bg-violet shadow-[0_0_8px_2px_rgb(134_93_255/0.55)]" />
-        <span className="font-mono text-[10.5px] tracking-[0.12em] text-haze uppercase">Concept demo</span>
-        <span aria-hidden className="hidden text-white/20 sm:inline">·</span>
+        <span className="font-mono text-[10.5px] tracking-[0.12em] whitespace-nowrap text-haze uppercase">Concept demo</span>
+        <span aria-hidden className="text-white/25">·</span>
         <span className="hidden truncate md:inline">
           All clients, events and figures are fictional sample data stored only in this browser.
         </span>
         <span className="truncate md:hidden">Fictional sample data</span>
       </p>
       <nav aria-label="Leave demo" className="flex shrink-0 items-center gap-1">
-        <Link href="/" className="rounded-md px-2 py-1 text-haze-muted transition-colors hover:bg-white/[0.06] hover:text-white">
-          Back to site
+        <Link
+          href="/"
+          aria-label="Back to site"
+          className="inline-flex items-center gap-1 rounded-md px-2 py-1 text-haze-muted transition-colors hover:bg-white/[0.06] hover:text-white"
+        >
+          <ArrowLeft aria-hidden className="size-3.5 sm:hidden" />
+          <span className="hidden sm:inline">Back to site</span>
         </Link>
         <Link
           href="/book-demo"
-          className="inline-flex items-center gap-1 rounded-md bg-electric-600 px-2.5 py-1 font-medium text-white transition-colors hover:bg-electric"
+          className="inline-flex items-center gap-1 rounded-md bg-electric-600 px-2.5 py-1 font-medium whitespace-nowrap text-white transition-colors hover:bg-electric"
         >
           Book a Demo
           <ArrowUpRight aria-hidden className="size-3" />
@@ -401,7 +407,7 @@ function LoadingSkeleton() {
           <div key={i} className="skeleton h-28 rounded-xl" />
         ))}
       </div>
-      <div className="grid gap-4 xl:grid-cols-3">
+      <div className="grid grid-cols-1 gap-4 xl:grid-cols-3">
         <div className="skeleton h-72 rounded-xl xl:col-span-2" />
         <div className="skeleton h-72 rounded-xl" />
       </div>

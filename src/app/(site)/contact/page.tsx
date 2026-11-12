@@ -54,25 +54,25 @@ export default function ContactPage() {
                 address or number.
               </p>
 
-              <dl className="mt-9 divide-y divide-ink/[0.08] overflow-hidden rounded-2xl bg-white ring-1 ring-ink/[0.07]">
+              <ul className="mt-9 divide-y divide-ink/[0.08] overflow-hidden rounded-2xl bg-white ring-1 ring-ink/[0.07]">
                 {channels.map((c) => {
                   const Icon = channelIcons[c.key];
                   return (
-                    <div key={c.key} className="flex items-start gap-4 p-5">
+                    <li key={c.key} className="flex items-start gap-4 p-5">
                       <span className="grid size-10 shrink-0 place-items-center rounded-xl bg-mist text-ink ring-1 ring-ink/[0.06]">
                         <Icon aria-hidden className="size-4" strokeWidth={1.7} />
                       </span>
                       <div className="min-w-0 flex-1">
-                        <dt className="flex flex-wrap items-center gap-2 text-[0.8rem] text-ink-subtle">
+                        <p className="flex flex-wrap items-center gap-2 text-[0.8rem] text-ink-subtle">
                           {c.label}
                           {c.placeholder && <PlaceholderTag />}
-                        </dt>
-                        <dd className="mt-1 break-words text-[1rem] font-medium tracking-[-0.01em] text-ink">{c.value}</dd>
+                        </p>
+                        <p className="mt-1 break-words text-[1rem] font-medium tracking-[-0.01em] text-ink">{c.value}</p>
                       </div>
-                    </div>
+                    </li>
                   );
                 })}
-              </dl>
+              </ul>
 
               <Link
                 href="/book-demo"
@@ -118,7 +118,7 @@ function SignalGraphic() {
     { label: "Proposal", x: "8%", y: "70%" },
   ];
   return (
-    <div aria-hidden className="relative mx-auto aspect-square w-full max-w-[22rem]">
+    <div aria-hidden className="relative mx-auto aspect-square w-full max-w-[16rem] sm:max-w-[22rem]">
       {[100, 76, 52, 28].map((s, i) => (
         <span
           key={s}

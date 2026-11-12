@@ -76,7 +76,7 @@ export function QuotationView() {
         />
       </div>
 
-      <div className="grid gap-4 xl:grid-cols-[380px_minmax(0,1fr)] print:block">
+      <div className="grid grid-cols-1 gap-4 xl:grid-cols-[380px_minmax(0,1fr)] print:block">
         {/* Controls */}
         <Card as="div" className="self-start print:hidden">
           <div className="border-b border-line p-4">
@@ -274,7 +274,7 @@ export function QuotationView() {
                 </div>
               </header>
 
-              <div className="mt-8 grid gap-6 rounded-lg bg-mist/70 p-4 sm:grid-cols-2 print:bg-transparent print:p-0">
+              <div className="mt-8 grid grid-cols-1 gap-6 rounded-lg bg-mist/70 p-4 sm:grid-cols-2 print:bg-transparent print:p-0">
                 <div>
                   <p className="font-mono text-[10px] tracking-[0.14em] text-ink-subtle uppercase">Prepared for</p>
                   <p className="mt-1.5 text-[13.5px] font-semibold text-ink">{event.client.name}</p>
@@ -294,13 +294,13 @@ export function QuotationView() {
               </div>
 
               <div className="scrollbar-thin mt-8 overflow-x-auto">
-                <table className="w-full min-w-[520px] border-collapse text-[13px]">
+                <table className="w-full border-collapse text-[13px] sm:min-w-[520px]">
                   <caption className="sr-only">Quotation line items</caption>
                   <thead>
                     <tr className="border-b border-ink/80 text-left text-[10.5px] tracking-[0.1em] text-ink-subtle uppercase">
                       <th scope="col" className="pb-2 font-medium">Description</th>
-                      <th scope="col" className="pb-2 text-right font-medium">Qty</th>
-                      <th scope="col" className="pb-2 text-right font-medium">Rate</th>
+                      <th scope="col" className="hidden pb-2 text-right font-medium sm:table-cell">Qty</th>
+                      <th scope="col" className="hidden pb-2 text-right font-medium sm:table-cell">Rate</th>
                       <th scope="col" className="pb-2 text-right font-medium">Amount</th>
                     </tr>
                   </thead>
@@ -309,14 +309,17 @@ export function QuotationView() {
                       <tr key={line.id} className="border-b border-line align-top">
                         <td className="py-3 pr-4">
                           <span className="font-medium text-ink">{line.label}</span>
+                          <span className="mt-0.5 block text-[12px] text-ink-muted tabular-nums sm:hidden">
+                            {unitLabel(line)} × {formatINRPrecise(line.unitPrice)}
+                          </span>
                           {line.id === "catering" && (
                             <span className="mt-1 block max-w-md text-[11.5px] leading-relaxed text-ink-subtle">
                               {dishes.length ? dishes.map((d) => d.name).join(" · ") : "Menu to be finalised"}
                             </span>
                           )}
                         </td>
-                        <td className="py-3 text-right whitespace-nowrap text-ink-muted tabular-nums">{unitLabel(line)}</td>
-                        <td className="py-3 pl-4 text-right whitespace-nowrap text-ink-muted tabular-nums">{formatINRPrecise(line.unitPrice)}</td>
+                        <td className="hidden py-3 text-right whitespace-nowrap text-ink-muted tabular-nums sm:table-cell">{unitLabel(line)}</td>
+                        <td className="hidden py-3 pl-4 text-right whitespace-nowrap text-ink-muted tabular-nums sm:table-cell">{formatINRPrecise(line.unitPrice)}</td>
                         <td className="py-3 pl-4 text-right whitespace-nowrap font-medium text-ink tabular-nums">{formatINRPrecise(line.amount)}</td>
                       </tr>
                     ))}
