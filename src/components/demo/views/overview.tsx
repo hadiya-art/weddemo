@@ -167,7 +167,7 @@ function BookingsChart() {
   const [hover, setHover] = useState<number | null>(null);
   const max = Math.max(...BOOKING_HISTORY.map((b) => b.bookings));
   const ceiling = Math.ceil(max / 5) * 5;
-  const tickStep = ceiling / 5 >= 3 ? 10 : 5;
+  const tickStep = ceiling > 25 ? 10 : 5;
   const total = BOOKING_HISTORY.reduce((s, b) => s + b.bookings, 0);
   const ticks = Array.from({ length: Math.floor(ceiling / tickStep) + 1 }, (_, i) => i * tickStep).reverse();
   const peak = BOOKING_HISTORY.reduce((a, b) => (b.bookings > a.bookings ? b : a));

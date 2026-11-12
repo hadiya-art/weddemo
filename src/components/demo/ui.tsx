@@ -333,7 +333,7 @@ export function DietMark({ diet, className }: { diet: Diet; className?: string }
         {diet === "nonveg" ? <path d="M6 3.2 8.6 8.2H3.4Z" fill={color} /> : <circle cx="6" cy="6" r="2.4" fill={color} />}
       </svg>
       {diet === "jain" && (
-        <span aria-hidden className="rounded-[3px] bg-[#E7F5EC] px-1 font-mono text-[9px] leading-[14px] font-semibold text-[#138A4B]">
+        <span aria-hidden className="rounded-[3px] bg-[#E7F5EC] px-1 font-mono text-[9px] leading-[14px] font-semibold text-[#0B6B39]">
           JAIN
         </span>
       )}
@@ -660,7 +660,7 @@ export function Tabs<T extends string>({
               <span
                 className={cn(
                   "rounded-full px-1.5 text-[10.5px] leading-4 tabular-nums",
-                  active ? "bg-electric/10 text-electric-600" : "bg-ink/[0.06] text-ink-subtle",
+                  active ? "bg-electric/10 text-electric-600" : "bg-ink/[0.06] text-ink-muted",
                 )}
               >
                 {t.count}

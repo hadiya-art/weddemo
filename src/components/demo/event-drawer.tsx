@@ -48,13 +48,13 @@ function Section({ title, children, action }: { title: string; children: ReactNo
 
 function Fact({ icon, label, children }: { icon: ReactNode; label: string; children: ReactNode }) {
   return (
-    <div className="flex gap-2.5">
-      <span className="mt-0.5 text-ink-subtle">{icon}</span>
+    <li className="flex gap-2.5">
+      <span aria-hidden className="mt-0.5 text-ink-subtle">{icon}</span>
       <div className="min-w-0">
-        <dt className="text-[11.5px] text-ink-subtle">{label}</dt>
-        <dd className="mt-0.5 text-[13px] font-medium text-ink">{children}</dd>
+        <p className="text-[11.5px] text-ink-subtle">{label}</p>
+        <p className="mt-0.5 text-[13px] font-medium text-ink">{children}</p>
       </div>
-    </div>
+    </li>
   );
 }
 
@@ -81,7 +81,7 @@ function EventDetails({ eventId }: { eventId: string }) {
 
   return (
     <>
-      <header className="flex items-start gap-3 px-5 pt-5 pb-4 sm:px-6">
+      <div className="flex items-start gap-3 px-5 pt-5 pb-4 sm:px-6">
         <div className="min-w-0 flex-1">
           <div className="flex flex-wrap items-center gap-2">
             <span className="font-mono text-[11px] text-ink-subtle">{event.id}</span>
@@ -95,7 +95,7 @@ function EventDetails({ eventId }: { eventId: string }) {
         <IconBtn label="Close event details" onClick={closeEvent}>
           <X aria-hidden className="size-4" />
         </IconBtn>
-      </header>
+      </div>
 
       <div className="scrollbar-thin flex-1 overflow-y-auto">
         <div className="flex flex-wrap items-center gap-3 px-5 pb-5 sm:px-6">
@@ -123,7 +123,7 @@ function EventDetails({ eventId }: { eventId: string }) {
         </div>
 
         <Section title="Details">
-          <dl className="grid grid-cols-1 gap-x-6 gap-y-4 sm:grid-cols-2">
+          <ul className="grid grid-cols-1 gap-x-6 gap-y-4 sm:grid-cols-2">
             <Fact icon={<CalendarDays className="size-4" />} label="Date">
               {formatLongDate(event.date)}
             </Fact>
@@ -143,7 +143,7 @@ function EventDetails({ eventId }: { eventId: string }) {
             <Fact icon={<Mail className="size-4" />} label="Email (masked)">
               <span className="font-mono text-[12.5px]">{event.client.email}</span>
             </Fact>
-          </dl>
+          </ul>
         </Section>
 
         <Section
@@ -172,9 +172,8 @@ function EventDetails({ eventId }: { eventId: string }) {
                       toast(`${s.name} removed from this event.`, "info");
                     }}
                     className="rounded-md px-2 py-1 text-[12px] text-ink-subtle hover:bg-white hover:text-danger"
-                    aria-label={`Unassign ${s.name}`}
                   >
-                    Remove
+                    Remove<span className="sr-only"> {s.name}</span>
                   </button>
                 </li>
               ))}

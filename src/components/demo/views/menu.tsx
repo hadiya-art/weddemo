@@ -166,8 +166,6 @@ export function MenuView() {
                               <button
                                 type="button"
                                 onClick={() => toggle(d.id)}
-                                aria-pressed={inMenu}
-                                aria-label={inMenu ? `Remove ${d.name} from menu` : `Add ${d.name} to menu`}
                                 className={cn(
                                   "inline-flex h-7 w-[74px] shrink-0 items-center justify-center gap-1 rounded-md text-[12px] font-medium transition-colors",
                                   inMenu
@@ -178,10 +176,12 @@ export function MenuView() {
                                 {inMenu ? (
                                   <>
                                     <Check aria-hidden className="size-3.5" /> Added
+                                    <span className="sr-only"> {d.name} (select to remove)</span>
                                   </>
                                 ) : (
                                   <>
                                     <Plus aria-hidden className="size-3.5" /> Add
+                                    <span className="sr-only"> {d.name}</span>
                                   </>
                                 )}
                               </button>
@@ -283,8 +283,8 @@ export function MenuView() {
                   {formatINR(subtotal)}
                 </dd>
               </div>
-              <p className="text-[11px] text-ink-subtle">Before décor, add-ons, discount and tax.</p>
             </dl>
+            <p className="-mt-2 px-4 pb-3 text-[11px] text-ink-subtle">Before décor, add-ons, discount and tax.</p>
             <div className="flex gap-2 border-t border-line bg-mist/60 p-3">
               <Btn
                 size="sm"

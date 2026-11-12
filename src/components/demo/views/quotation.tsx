@@ -334,7 +334,8 @@ export function QuotationView() {
                     {ADVANCE_PCT}% advance on confirmation · balance due 7 days before the event. Prices hold until the validity date.
                   </p>
                 </div>
-                <dl className="order-1 w-full space-y-2 text-[13px] sm:order-2 sm:w-80">
+                <div className="order-1 w-full sm:order-2 sm:w-80">
+                <dl className="space-y-2 text-[13px]">
                   <Row label="Subtotal" value={formatINRPrecise(q.subtotal)} />
                   <Row label={`Discount (${q.discountPct}%)`} value={q.discount ? `− ${formatINRPrecise(q.discount)}` : formatINRPrecise(0)} />
                   <Row label="Taxable value" value={formatINRPrecise(q.taxable)} />
@@ -346,17 +347,18 @@ export function QuotationView() {
                     </dd>
                   </div>
                   <Row label="Effective cost per guest" value={formatINRPrecise(q.perGuest)} muted />
+                </dl>
                   <div className="mt-3 grid grid-cols-2 gap-2">
-                    <div className="rounded-lg bg-electric/[0.06] px-3 py-2.5 ring-1 ring-electric/15 ring-inset">
+                    <dl className="rounded-lg bg-electric/[0.06] px-3 py-2.5 ring-1 ring-electric/15 ring-inset">
                       <dt className="text-[11px] text-electric-600">Advance ({q.advancePct}%)</dt>
                       <dd className="mt-0.5 text-[14px] font-semibold text-ink tabular-nums">{formatINRPrecise(q.advance)}</dd>
-                    </div>
-                    <div className="rounded-lg bg-mist px-3 py-2.5 ring-1 ring-line ring-inset">
+                    </dl>
+                    <dl className="rounded-lg bg-mist px-3 py-2.5 ring-1 ring-line ring-inset">
                       <dt className="text-[11px] text-ink-subtle">Balance ({100 - q.advancePct}%)</dt>
                       <dd className="mt-0.5 text-[14px] font-semibold text-ink tabular-nums">{formatINRPrecise(q.balance)}</dd>
-                    </div>
+                    </dl>
                   </div>
-                </dl>
+              </div>
               </div>
 
               <footer className="mt-10 border-t border-line pt-4 text-[11px] leading-relaxed text-ink-subtle">

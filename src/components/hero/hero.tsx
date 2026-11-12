@@ -66,7 +66,7 @@ export function Hero() {
       </Container>
 
       {/* Desktop stage — bleeds off the right edge behind the copy column */}
-      <HeroStage className="absolute top-[9%] right-[-7%] bottom-[2%] hidden w-[64%] lg:block xl:right-[-4%] xl:w-[62%]" />
+      <HeroStage className="absolute top-[9%] right-[-6%] bottom-[2%] left-[calc(50%-40px)] hidden lg:block 2xl:right-[calc(50%-820px)] 2xl:left-[calc(50%-20px)]" />
     </section>
   );
 }

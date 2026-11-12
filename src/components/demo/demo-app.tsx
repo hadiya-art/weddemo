@@ -163,7 +163,7 @@ function Shell() {
 
 function ConceptBanner() {
   return (
-    <div className="on-dark relative z-30 flex min-h-9 items-center justify-between gap-3 border-b border-white/[0.06] bg-[#070A16] px-4 py-1.5 text-[12px] text-haze-muted sm:px-5 print:hidden">
+    <div role="region" aria-label="Concept demo notice" className="on-dark relative z-30 flex min-h-9 items-center justify-between gap-3 border-b border-white/[0.06] bg-[#070A16] px-4 py-1.5 text-[12px] text-haze-muted sm:px-5 print:hidden">
       <p className="flex min-w-0 items-center gap-2">
         <span aria-hidden className="size-1.5 shrink-0 rounded-full bg-violet shadow-[0_0_8px_2px_rgb(134_93_255/0.55)]" />
         <span className="font-mono text-[10.5px] tracking-[0.12em] whitespace-nowrap text-haze uppercase">Concept demo</span>
@@ -207,7 +207,7 @@ function SidebarContent({ onNavigate, onReset }: { onNavigate?: () => void; onRe
       <nav aria-label="Demo views" className="scrollbar-thin min-h-0 flex-1 overflow-y-auto px-3 pt-2 pb-4">
         {NAV.map((group) => (
           <div key={group.group} className="mt-4 first:mt-1">
-            <p className="px-2.5 pb-1.5 font-mono text-[10px] tracking-[0.14em] text-haze-subtle/80 uppercase">{group.group}</p>
+            <p className="px-2.5 pb-1.5 font-mono text-[10px] tracking-[0.14em] text-haze-subtle uppercase">{group.group}</p>
             <ul className="flex flex-col gap-0.5">
               {group.items.map(({ id, icon: Icon }) => {
                 const active = view === id;

@@ -14,10 +14,10 @@ import { AvatarStack, Btn, Card, EmptyState, Select, StatusBadge, Tabs, TypeTag,
 type SortKey = "date-asc" | "date-desc" | "value-desc" | "value-asc";
 
 const SORTS: { id: SortKey; label: string }[] = [
-  { id: "date-asc", label: "Date — soonest first" },
-  { id: "date-desc", label: "Date — latest first" },
-  { id: "value-desc", label: "Value — highest first" },
-  { id: "value-asc", label: "Value — lowest first" },
+  { id: "date-asc", label: "Soonest first" },
+  { id: "date-desc", label: "Latest first" },
+  { id: "value-desc", label: "Highest value" },
+  { id: "value-asc", label: "Lowest value" },
 ];
 
 export function EventsView() {
@@ -122,7 +122,7 @@ export function EventsView() {
               <label htmlFor={sortId} className="sr-only">
                 Sort events
               </label>
-              <Select id={sortId} value={sort} onChange={(e) => setSort(e.target.value as SortKey)} className="sm:w-52">
+              <Select id={sortId} value={sort} onChange={(e) => setSort(e.target.value as SortKey)} className="sm:w-44">
                 {SORTS.map((s) => (
                   <option key={s.id} value={s.id}>
                     {s.label}

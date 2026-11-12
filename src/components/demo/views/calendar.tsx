@@ -153,7 +153,7 @@ export function CalendarView() {
                               ? "bg-electric-600 text-white shadow-[0_2px_8px_-2px_rgb(47_94_240/0.6)]"
                               : inMonth
                                 ? "text-ink-2 hover:bg-ink/[0.06]"
-                                : "text-ink-subtle/70 hover:bg-ink/[0.05]",
+                                : "font-normal text-ink-subtle hover:bg-ink/[0.05]",
                           )}
                         >
                           {Number(iso.slice(8))}
@@ -207,7 +207,7 @@ export function CalendarView() {
                             <span aria-hidden className={cn("mt-1 h-8 w-[3px] shrink-0 rounded-full", EVENT_TYPE_META[e.type].bar)} />
                             <span className="min-w-0 flex-1">
                               <span className={cn("block truncate text-[13px] font-semibold", e.status === "cancelled" && "line-through")}>{e.title}</span>
-                              <span className="block truncate text-[12px] opacity-80">
+                              <span className="block truncate text-[12px]">
                                 {formatTime(e.startTime)} · {e.venue}
                               </span>
                             </span>

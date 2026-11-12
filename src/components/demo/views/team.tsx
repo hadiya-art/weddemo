@@ -277,17 +277,19 @@ function TaskCard({
       </div>
       <div className="mt-2.5 flex items-center justify-between gap-1 border-t border-line pt-2">
         {onPrev ? (
-          <Btn size="xs" variant="ghost" onClick={onPrev} aria-label={`Move “${task.title}” back to ${prevLabel}`}>
+          <Btn size="xs" variant="ghost" onClick={onPrev}>
             {task.status === "done" ? <RotateCcw aria-hidden className="size-3" /> : <ArrowLeft aria-hidden className="size-3" />}
             {task.status === "done" ? "Reopen" : prevLabel}
+            <span className="sr-only">: move “{task.title}” back to {prevLabel}</span>
           </Btn>
         ) : (
           <span />
         )}
         {onNext && (
-          <Btn size="xs" variant="subtle" onClick={onNext} aria-label={`Move “${task.title}” to ${nextLabel}`}>
+          <Btn size="xs" variant="subtle" onClick={onNext}>
             {nextLabel === "Done" ? <Check aria-hidden className="size-3" /> : null}
             {nextLabel === "Done" ? "Mark done" : "Start"}
+            <span className="sr-only">: move “{task.title}” to {nextLabel}</span>
             {nextLabel !== "Done" && <ArrowRight aria-hidden className="size-3" />}
           </Btn>
         )}
@@ -506,10 +508,10 @@ function MyFollowUps() {
                         dispatch({ type: "toggleFollowUp", id: f.id });
                         if (!f.done) toast("Follow-up marked done.");
                       }}
-                      aria-label={f.done ? `Reopen follow-up: ${f.note}` : `Mark follow-up done: ${f.note}`}
                     >
                       {f.done ? <RotateCcw aria-hidden className="size-3" /> : <Check aria-hidden className="size-3" />}
                       {f.done ? "Reopen" : "Mark done"}
+                      <span className="sr-only">: {f.note}</span>
                     </Btn>
                   </li>
                 );
